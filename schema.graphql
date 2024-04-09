@@ -1,0 +1,39 @@
+type User {
+  id: ID!
+  userName: String!
+  createdAt: String!
+  activities: [Activity]
+}
+
+type Plan {
+  id: ID!
+  createdAt: String!
+  activities: [Activity]
+}
+
+type Activity {
+  sessionId: ID!
+  user: User!
+  plan: Plan!
+  eventType: String!
+  taskContent: String!
+  createdAt: String!
+}
+
+# Queries and Mutations
+
+type Query {
+  # Find plans on a specific day. Returns all plans created on that day.
+  findPlanOnSpecificDay(day: String!, userId: ID!): [Plan]
+}
+
+type Mutation {
+  # Inserts a new plan and links it to a user. The mutation also assumes
+  # the creation of an initial activity (e.g., 'add new task') for the plan.
+  insertNewPlan(
+    userId: ID!,
+    createdAt: String!,
+    eventType: String!,
+    taskContent: String!
+  ): Plan
+}
